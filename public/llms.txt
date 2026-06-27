@@ -1,0 +1,70 @@
+# Mirella Bartra — LLMs.txt
+# AI-readable site overview for LLM crawlers (Claude, ChatGPT, Gemini, etc.)
+# Standard: https://llmstxt.org/
+
+## Site Info
+name: Mirella Bartra
+description: El primer medio oficial para terapeutas de todo el continente. Noticias, papers académicos, directorio de terapeutas, cursos online y más.
+url: https://mirellabartra.com
+language: es-PE
+
+## Key Pages
+- Home: https://mirellabartra.com/
+- Artículos (Noticias): https://mirellabartra.com/articulos
+- Papers Académicos: https://mirellabartra.com/articulos?categoria=Papers
+- Cursos Online: https://mirellabartra.com/cursos
+- Eventos: https://mirellabartra.com/eventos
+- Directorio de Terapeutas: https://mirellabartra.com/directorio
+- Capacitaciones B2B: https://mirellabartra.com/capacitaciones-b2b
+- Descargables: https://mirellabartra.com/descargables
+- Búsqueda: https://mirellabartra.com/buscar
+- Contacto: https://mirellabartra.com/contacto
+- Legal: https://mirellabartra.com/legal
+
+## API Endpoints
+- Articles JSON: /api/articles
+- Courses JSON: /api/courses
+- Events JSON: /api/events
+- Directory JSON: /api/directory
+
+## AI / MCP Access
+- MCP Server: /api/mcp (POST with JSON-RPC 2.0)
+- MCP Tools: /api/mcp (GET for tool list)
+- LLM Feeds: /api/feeds (JSON structured data feeds)
+
+## Data Feeds (JSON-LD)
+- Site Knowledge Graph: /api/feeds/kg.json
+- Articles Feed: /api/feeds/articles.json
+- Courses Feed: /api/feeds/courses.json
+- Events Feed: /api/feeds/events.json
+- Directory Feed: /api/feeds/directory.json
+
+## Sitemaps
+- XML Sitemap: /sitemap.xml
+- Robots.txt: /robots.txt
+- RSS Feed: /rss.xml
+
+## Founders
+- Hilda Ayme Fernandez — Primera generación de terapeutas ocupacionales en Perú, ex profesora universitaria, 60+ años de trayectoria.
+- Mirella Bartra Ayme — Terapeuta de lenguaje condecorada por el estado peruano, profesora universitaria, 30+ años de experiencia.
+- Renzo Pérez Bartra — Especialista en IA, 8+ años escalando negocios en LATAM, ex Growth Lead en Aimo (Forbes Top 100 startups Perú).
+
+## Business Model
+- Cursos en vivo y grabados
+- Congresos full day remotos
+- Talleres prácticos exclusivos
+- Puja para ranking en directorio
+- Notas de prensa para centros y terapeutas
+- Descargables (gratuitos y de pago)
+- Capacitaciones B2B para empresas
+
+## Tech Stack
+- Frontend: React 18 + Vite
+- Backend: Netlify Edge Functions + Supabase
+- Auth: Supabase Auth
+- Database: PostgreSQL (Supabase)
+- Storage: Supabase Storage
+- MCP: Custom MCP Server at /api/mcp
+
+## More Info
+- Full LLMs context: /llms-full.txt

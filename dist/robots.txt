@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /api/site.json
+Allow: /api/brands.json
+Allow: /api/events.json
+Allow: /kg.json
+Disallow: /admin/
+Disallow: /api/leads
+Disallow: /api/subscribers
+
+Sitemap: https://mirellabartra.com/sitemap.xml

@@ -1,0 +1,309 @@
+/* ============================================================================
+   mirellabartra.com — Brutalist Design System
+   Design tokens from the original index.html prototype.
+   DO NOT CHANGE: color palette, font stack, spacing.
+   ============================================================================ */
+
+:root {
+  --bg-base: #ededeb;
+  --text-dark: #111111;
+  --text-light: #ffffff;
+  --text-muted: #555555;
+  --border-color: #cccccc;
+  --accent-glow: #a7f3d0;
+  --font-display: 'Antonio', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --transition-fast: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --container-max: 1280px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  padding: 0 12px;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding: 0 20px;
+  }
+}
+
+/* ---- Utility Classes ---- */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* ---- Typography ---- */
+.font-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ---- Buttons (Brutalist) ---- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.1rem;
+  background: var(--text-dark);
+  color: var(--text-light);
+  border: 1px solid var(--text-dark);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.btn-primary:hover {
+  background: var(--text-light);
+  color: var(--text-dark);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.1rem;
+  background: transparent;
+  color: var(--text-dark);
+  border: 1px solid var(--text-dark);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.btn-outline:hover {
+  background: var(--text-dark);
+  color: var(--text-light);
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.1rem;
+  background: var(--accent-glow);
+  color: var(--text-dark);
+  border: 1px solid var(--accent-glow);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.btn-accent:hover {
+  background: transparent;
+  color: var(--text-dark);
+  transform: translateY(-1px);
+}
+
+.btn-small {
+  padding: 0.4rem 0.8rem;
+  font-size: 11px;
+}
+
+/* ---- Form Elements (Brutalist) ---- */
+.input-brutalist {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--text-dark);
+  background: var(--text-light);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-radius: 6px;
+  transition: var(--transition-fast);
+}
+
+.input-brutalist:focus {
+  outline: none;
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 0 3px rgba(167, 243, 208, 0.3);
+}
+
+.input-brutalist::placeholder {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+textarea.input-brutalist {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ---- Cards ---- */
+.card-brutalist {
+  background: var(--text-light);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: var(--transition-fast);
+}
+
+.card-brutalist:hover {
+  border-color: var(--text-dark);
+  transform: translateY(-2px);
+}
+
+/* ---- Tags / Badges ---- */
+.tag {
+  display: inline-block;
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--text-dark);
+  color: var(--text-light);
+}
+
+.tag-outline {
+  background: var(--bg-base);
+  color: var(--text-dark);
+  border: 1px solid var(--text-dark);
+}
+
+/* ---- Section Separator ---- */
+.section-separator {
+  font-family: var(--font-display);
+  font-size: 22px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--text-dark);
+  padding-bottom: 6px;
+  margin: 45px 0 20px 0;
+}
+
+.section-separator-sm {
+  font-size: 16px;
+  margin: 30px 0 15px 0;
+}
+
+/* ---- Grids ---- */
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* ---- Loading ---- */
+.loading-skeleton {
+  background: #d1d1cf;
+  border-radius: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ---- Page Transition ---- */
+@keyframes viewFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: viewFadeIn 0.4s ease forwards;
+}
+
+/* ---- Back Link ---- */
+.back-link {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 8px 16px;
+  border: 1px solid var(--text-dark);
+  cursor: pointer;
+  margin: 15px 0;
+  border-radius: 6px;
+  transition: var(--transition-fast);
+}
+
+.back-link:hover {
+  background: var(--text-dark);
+  color: var(--text-light);
+}
+
+/* ---- Spinner ---- */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--text-dark);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Toast notifications ---- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--text-dark);
+  color: var(--text-light);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.toast-success {
+  border-left: 4px solid var(--accent-glow);
+}
+
+.toast-error {
+  border-left: 4px solid #ef4444;
+}
