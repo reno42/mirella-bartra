@@ -12,10 +12,13 @@ import PageLoader from '@/components/PageLoader.jsx'
 import Home from '@/pages/public/Home.jsx'
 import Articulos from '@/pages/public/Articulos.jsx'
 import ArticuloDetalle from '@/pages/public/ArticuloDetalle.jsx'
+import PapersAcademicos from '@/pages/public/PapersAcademicos.jsx'
+import Congresos from '@/pages/public/Congresos.jsx'
 import Cursos from '@/pages/public/Cursos.jsx'
 import CursoDetalle from '@/pages/public/CursoDetalle.jsx'
 import Eventos from '@/pages/public/Eventos.jsx'
 import EventoDetalle from '@/pages/public/EventoDetalle.jsx'
+import Nosotros from '@/pages/public/Nosotros.jsx'
 import Directorio from '@/pages/public/Directorio.jsx'
 import TerapeutaDetalle from '@/pages/public/TerapeutaDetalle.jsx'
 import DirectorioForm from '@/pages/public/DirectorioForm.jsx'
@@ -82,6 +85,9 @@ export default function App() {
               <Route index element={<Home />} />
               <Route path="/articulos" element={<Articulos />} />
               <Route path="/articulos/:slug" element={<ArticuloDetalle />} />
+              <Route path="/papers" element={<PapersAcademicos />} />
+              <Route path="/congresos" element={<Congresos />} />
+              <Route path="/nosotros" element={<Nosotros />} />
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursos/:slug" element={<CursoDetalle />} />
               <Route path="/eventos" element={<Eventos />} />

@@ -5,8 +5,8 @@ const NAV_SECTIONS = [
     title: 'Contenido',
     links: [
       { label: 'Noticias', to: '/articulos' },
-      { label: 'Cursos', to: '/cursos' },
-      { label: 'Eventos', to: '/eventos' },
+      { label: 'Papers Académicos', to: '/papers' },
+      { label: 'Congresos', to: '/congresos' },
       { label: 'Descuentos', to: '/descuentos' },
       { label: 'Descargables', to: '/descargables' },
     ],
@@ -15,6 +15,7 @@ const NAV_SECTIONS = [
     title: 'Comunidad',
     links: [
       { label: 'Directorio', to: '/directorio' },
+      { label: 'Nosotros', to: '/nosotros' },
       { label: 'Capacitaciones B2B', to: '/capacitaciones-b2b' },
       { label: 'Trabaja con Nosotros', to: '/trabaja-con-nosotros' },
     ],

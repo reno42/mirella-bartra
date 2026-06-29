@@ -35,9 +35,10 @@ export default function Header() {
 
         <nav className={`header-nav ${menuOpen ? 'open' : ''}`}>
           <NavLink to="/articulos" className={linkClass} onClick={() => setMenuOpen(false)}>Noticias</NavLink>
-          <NavLink to="/cursos" className={linkClass} onClick={() => setMenuOpen(false)}>Cursos</NavLink>
-          <NavLink to="/eventos" className={linkClass} onClick={() => setMenuOpen(false)}>Eventos</NavLink>
+          <NavLink to="/papers" className={linkClass} onClick={() => setMenuOpen(false)}>Papers</NavLink>
+          <NavLink to="/congresos" className={linkClass} onClick={() => setMenuOpen(false)}>Congresos</NavLink>
           <NavLink to="/directorio" className={linkClass} onClick={() => setMenuOpen(false)}>Directorio</NavLink>
+          <NavLink to="/nosotros" className={linkClass} onClick={() => setMenuOpen(false)}>Nosotros</NavLink>
           <NavLink to="/contacto" className={linkClass} onClick={() => setMenuOpen(false)}>Contacto</NavLink>
 
           {session ? (
