@@ -23,6 +23,10 @@ export default function Directorio() {
     }).catch(console.error).finally(() => setLoading(false))
   }, [])
 
+  const topTherapists = entries.filter(e => e.is_top)
+  const regularTherapists = selectedSpecialty
+    ? entries.filter(e => !e.is_top && e.specialty === selectedSpecialty)
+    : entries.filter(e => !e.is_top)
   const filtered = selectedSpecialty
     ? entries.filter(e => e.specialty === selectedSpecialty)
     : entries
@@ -78,39 +82,92 @@ export default function Directorio() {
           {filtered.length === 0 ? (
             <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>No se encontraron terapeutas en esta categoría.</p>
           ) : (
-            <div className="grid-auto-fill">
-              {filtered.map(entry => (
-                <div
-                  key={entry.id}
-                  onClick={() => setSelectedTherapist(entry)}
-                  style={{ textDecoration: 'none', cursor: 'pointer' }}
-                >
-                  <div className="card-brutalist" style={{ height: '100%' }}>
-                    <div style={{ padding: '16px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                        <div style={{
-                          width: '44px', height: '44px', borderRadius: '50%', background: 'var(--text-dark)',
-                          color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          fontWeight: 700, fontSize: '16px', fontFamily: 'var(--font-display)', flexShrink: 0,
-                        }}>
-                          {entry.full_name?.charAt(0) || '?'}
-                        </div>
-                        <div>
-                          <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-dark)' }}>
-                            {entry.full_name}
-                          </h3>
-                          <span className="tag tag-outline" style={{ fontSize: '9px' }}>{entry.specialty || 'Fonoaudiología'}</span>
+            <>
+              {/* ── Top Terapeutas ── */}
+              {topTherapists.length > 0 && (
+                <section style={{ marginBottom: '40px' }}>
+                  <div className="press-section-header">
+                    <h2>Top Terapeutas Recomendados</h2>
+                  </div>
+                  <div className="grid-auto-fill">
+                    {topTherapists.map(entry => (
+                      <div
+                        key={entry.id}
+                        onClick={() => setSelectedTherapist(entry)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <div className="card-brutalist" style={{ height: '100%', borderColor: 'var(--text-dark)', borderWidth: '2px', background: 'var(--accent-glow)' }}>
+                          <div style={{ padding: '16px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                              <div style={{
+                                width: '48px', height: '48px', borderRadius: '50%', background: 'var(--text-dark)',
+                                color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                fontWeight: 700, fontSize: '18px', fontFamily: 'var(--font-display)', flexShrink: 0,
+                                border: '2px solid var(--text-dark)',
+                              }}>
+                                {entry.full_name?.charAt(0) || '?'}
+                              </div>
+                              <div>
+                                <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-dark)' }}>
+                                  {entry.full_name}
+                                </h3>
+                                <span className="tag" style={{ fontSize: '9px' }}>{entry.specialty || 'Fonoaudiología'}</span>
+                              </div>
+                            </div>
+                            <div style={{ fontSize: '12px', color: 'var(--text-dark)', lineHeight: 1.5 }}>
+                              {entry.city && <div>📍 {entry.city}</div>}
+                              {entry.years_experience && <div>📋 {entry.years_experience} años de experiencia</div>}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                        {entry.city && <div>📍 {entry.city}</div>}
-                        {entry.years_experience && <div>📋 {entry.years_experience} años de experiencia</div>}
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* ── Todos los terapeutas ── */}
+              <section>
+                {topTherapists.length > 0 && (
+                  <div className="press-section-header">
+                    <h2>Todos los Terapeutas</h2>
+                  </div>
+                )}
+                <div className="grid-auto-fill">
+                  {(topTherapists.length > 0 ? regularTherapists : filtered).map(entry => (
+                    <div
+                      key={entry.id}
+                      onClick={() => setSelectedTherapist(entry)}
+                      style={{ textDecoration: 'none', cursor: 'pointer' }}
+                    >
+                      <div className="card-brutalist" style={{ height: '100%' }}>
+                        <div style={{ padding: '16px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                            <div style={{
+                              width: '44px', height: '44px', borderRadius: '50%', background: 'var(--text-dark)',
+                              color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              fontWeight: 700, fontSize: '16px', fontFamily: 'var(--font-display)', flexShrink: 0,
+                            }}>
+                              {entry.full_name?.charAt(0) || '?'}
+                            </div>
+                            <div>
+                              <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-dark)' }}>
+                                {entry.full_name}
+                              </h3>
+                              <span className="tag tag-outline" style={{ fontSize: '9px' }}>{entry.specialty || 'Fonoaudiología'}</span>
+                            </div>
+                          </div>
+                          <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                            {entry.city && <div>📍 {entry.city}</div>}
+                            {entry.years_experience && <div>📋 {entry.years_experience} años de experiencia</div>}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </section>
+            </>
           )}
 
           <NewsletterCTA />

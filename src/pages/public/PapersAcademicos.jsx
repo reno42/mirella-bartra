@@ -17,6 +17,15 @@ const PAPER_SECTIONS = [
   'Audición',
 ]
 
+const NAV_CATEGORIES = [
+  { label: 'Inicio', route: '/' },
+  { label: 'Noticias', route: '/articulos' },
+  { label: 'Papers', route: '/papers' },
+  { label: 'Congresos', route: '/congresos' },
+  { label: 'Directorio', route: '/directorio' },
+  { label: 'Nosotros', route: '/nosotros' },
+]
+
 export default function PapersAcademicos() {
   const [papers, setPapers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -84,14 +93,23 @@ export default function PapersAcademicos() {
             <span>Edición Digital</span>
           </div>
 
-          {/* Category Bar */}
+          {/* Category Bar — same as Home (page navigation) */}
           <div className="press-category-bar">
-            <Link to="/" className="press-category-link">Inicio</Link>
+            {NAV_CATEGORIES.map((cat) => (
+              <Link key={cat.route} to={cat.route} className="press-category-link">
+                {cat.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Topic Filter Bar */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
             {PAPER_SECTIONS.map((cat) => (
               <button
                 key={cat}
-                className={`press-category-link ${activeFilter === cat ? 'active' : ''}`}
+                className={`tag ${activeFilter === cat ? '' : 'tag-outline'}`}
                 onClick={() => setActiveFilter(cat)}
+                style={{ cursor: 'pointer' }}
               >
                 {cat}
               </button>

@@ -8,7 +8,6 @@ import LoadingSpinner from '@/components/LoadingSpinner.jsx'
 import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
 const NEWS_SECTIONS = [
-  'Inicio',
   'Todos',
   'Lenguaje',
   'Habla',
@@ -17,6 +16,15 @@ const NEWS_SECTIONS = [
   'Neurociencia',
   'Audición',
   'Tecnología',
+]
+
+const NAV_CATEGORIES = [
+  { label: 'Inicio', route: '/' },
+  { label: 'Noticias', route: '/articulos' },
+  { label: 'Papers', route: '/papers' },
+  { label: 'Congresos', route: '/congresos' },
+  { label: 'Directorio', route: '/directorio' },
+  { label: 'Nosotros', route: '/nosotros' },
 ]
 
 export default function Articulos() {
@@ -80,14 +88,23 @@ export default function Articulos() {
             <span>Edición Digital</span>
           </div>
 
-          {/* Category Bar */}
+          {/* Category Bar — same as Home (page navigation) */}
           <div className="press-category-bar">
-            <Link to="/" className="press-category-link">Inicio</Link>
-            {NEWS_SECTIONS.filter(c => c !== 'Inicio').map((cat) => (
+            {NAV_CATEGORIES.map((cat) => (
+              <Link key={cat.route} to={cat.route} className="press-category-link">
+                {cat.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Topic Filter Bar */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
+            {NEWS_SECTIONS.map((cat) => (
               <button
                 key={cat}
-                className={`press-category-link ${activeFilter === cat ? 'active' : ''}`}
+                className={`tag ${activeFilter === cat ? '' : 'tag-outline'}`}
                 onClick={() => setActiveFilter(cat)}
+                style={{ cursor: 'pointer' }}
               >
                 {cat}
               </button>

@@ -17,7 +17,21 @@ export default function ArticuloDetalle() {
     db.getArticleBySlug(slug).then(({ data }) => {
       setArticle(data)
       if (data) {
-        db.getRelatedArticles(data.id, 3).then(({ data: rel }) => setRelated(rel || []))
+        // Try pivot table first, then fallback to same-type articles
+        db.getRelatedArticles(data.id, 4).then(({ data: rel }) => {
+          if (rel && rel.length >= 2) {
+            setRelated(filterByType(rel, data))
+          } else {
+            // Fallback: fetch recent articles and filter to same type
+            db.getArticles({ limit: 20 }).then(({ data: all }) => {
+              const sameType = (all || [])
+                .filter(a => a.id !== data.id)
+                .filter(a => isPaper(a) === isPaper(data))
+                .slice(0, 4)
+              setRelated(sameType)
+            })
+          }
+        })
       }
     }).catch(console.error).finally(() => setLoading(false))
   }, [slug])
@@ -143,7 +157,9 @@ export default function ArticuloDetalle() {
       {/* Related Articles */}
       {related.length > 0 && (
         <section style={{ marginTop: '50px' }}>
-          <h2 className="section-separator">Artículos relacionados</h2>
+          <h2 className="section-separator">
+            {isPaper(article) ? 'Papers relacionados' : 'Noticias relacionadas'}
+          </h2>
           <div className="grid-auto-fill">
             {related.map(a => (
               <Link key={a.id} to={`/articulos/${a.slug}`} style={{ textDecoration: 'none' }}>
@@ -181,4 +197,22 @@ export default function ArticuloDetalle() {
       `}</style>
     </>
   )
+}
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function isPaper(a) {
+  const section = (a?.articleSection || '').toLowerCase()
+  const category = (a?.category || '').toLowerCase()
+  return (
+    section.includes('paper') ||
+    section.includes('académic') ||
+    section.includes('academic') ||
+    category.includes('paper') ||
+    category.includes('investigación')
+  )
+}
+
+function filterByType(articles, currentArticle) {
+  const currentIsPaper = isPaper(currentArticle)
+  return articles.filter(a => isPaper(a) === currentIsPaper)
 }
