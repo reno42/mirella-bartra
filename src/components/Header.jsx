@@ -34,6 +34,7 @@ export default function Header() {
         </button>
 
         <nav className={`header-nav ${menuOpen ? 'open' : ''}`}>
+          <NavLink to="/" end className={linkClass} onClick={() => setMenuOpen(false)}>Inicio</NavLink>
           <NavLink to="/articulos" className={linkClass} onClick={() => setMenuOpen(false)}>Noticias</NavLink>
           <NavLink to="/papers" className={linkClass} onClick={() => setMenuOpen(false)}>Papers</NavLink>
           <NavLink to="/congresos" className={linkClass} onClick={() => setMenuOpen(false)}>Congresos</NavLink>
