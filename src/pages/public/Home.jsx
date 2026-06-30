@@ -5,8 +5,10 @@ import { db } from '@/lib/supabase.js'
 import { generateOrganizationLD, generateWebSiteLD, generatePersonLD, generateFAQPageLD, generateBreadcrumbLD, generateMetaTags } from '@/lib/seo.js'
 import { formatDate, daysUntil, isDateInFuture } from '@/utils/dateUtils.js'
 import LoadingSpinner from '@/components/LoadingSpinner.jsx'
+import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
 const CATEGORIES = [
+  { label: 'Inicio', route: '/' },
   { label: 'Noticias', route: '/articulos' },
   { label: 'Papers Académicos', route: '/papers' },
   { label: 'Congresos', route: '/congresos' },
@@ -304,44 +306,7 @@ export default function Home() {
           </section>
 
           {/* ── Newsletter CTA ── */}
-          <section style={{
-            margin: '30px 0',
-            padding: 'clamp(25px, 4vw, 40px)',
-            background: 'var(--text-dark)',
-            borderRadius: '12px',
-            color: 'var(--text-light)',
-            textAlign: 'center',
-          }}>
-            <h2 className="font-display" style={{ fontSize: 'clamp(18px, 3vw, 26px)', marginBottom: '10px' }}>
- Suscríbete al boletín
-            </h2>
-            <p style={{ fontSize: '13px', opacity: 0.7, maxWidth: '400px', margin: '0 auto 16px' }}>
-              Recibe noticias, papers y eventos directamente en tu bandeja. Sin spam.
-            </p>
-            <form style={{ display: 'flex', gap: '8px', maxWidth: '400px', margin: '0 auto', flexWrap: 'wrap', justifyContent: 'center' }}
-              onSubmit={async (e) => {
-                e.preventDefault()
-                const email = e.target.email.value
-                if (email) {
-                  const { error } = await db.createSubscriber({ email })
-                  if (!error) {
-                    e.target.email.value = ''
-                    alert('¡Gracias por suscribirte!')
-                  }
-                }
-              }}
-            >
-              <input
-                name="email"
-                type="email"
-                placeholder="tu@correo.com"
-                required
-                className="input-brutalist"
-                style={{ flex: 1, minWidth: '200px', background: 'white' }}
-              />
-              <button type="submit" className="btn-accent btn-small">Suscribirme</button>
-            </form>
-          </section>
+          <NewsletterCTA />
         </>
       )}
     </>

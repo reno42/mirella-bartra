@@ -5,6 +5,7 @@ import { db } from '@/lib/supabase.js'
 import { generateMetaTags } from '@/lib/seo.js'
 import { formatDate } from '@/utils/dateUtils.js'
 import LoadingSpinner from '@/components/LoadingSpinner.jsx'
+import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
 const PAPER_SECTIONS = [
   'Todos',
@@ -85,6 +86,7 @@ export default function PapersAcademicos() {
 
           {/* Category Bar */}
           <div className="press-category-bar">
+            <Link to="/" className="press-category-link">Inicio</Link>
             {PAPER_SECTIONS.map((cat) => (
               <button
                 key={cat}
@@ -189,6 +191,7 @@ export default function PapersAcademicos() {
               )}
             </>
           )}
+          <NewsletterCTA />
         </>
       )}
     </>

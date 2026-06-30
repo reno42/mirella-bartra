@@ -5,8 +5,10 @@ import { db } from '@/lib/supabase.js'
 import { generateMetaTags } from '@/lib/seo.js'
 import { formatDate } from '@/utils/dateUtils.js'
 import LoadingSpinner from '@/components/LoadingSpinner.jsx'
+import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
 const NEWS_SECTIONS = [
+  'Inicio',
   'Todos',
   'Lenguaje',
   'Habla',
@@ -80,7 +82,8 @@ export default function Articulos() {
 
           {/* Category Bar */}
           <div className="press-category-bar">
-            {NEWS_SECTIONS.map((cat) => (
+            <Link to="/" className="press-category-link">Inicio</Link>
+            {NEWS_SECTIONS.filter(c => c !== 'Inicio').map((cat) => (
               <button
                 key={cat}
                 className={`press-category-link ${activeFilter === cat ? 'active' : ''}`}
@@ -181,6 +184,7 @@ export default function Articulos() {
               )}
             </>
           )}
+          <NewsletterCTA />
         </>
       )}
     </>

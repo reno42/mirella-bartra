@@ -313,7 +313,7 @@ textarea.input-brutalist {
    Reuses brutalist tokens but adds editorial/magazine structure.
    ============================================================================ */
 
-/* ── Category Bar ── */
+/* ── Category Bar (Sticky, Full-Width) ── */
 .press-category-bar {
   display: flex;
   gap: 0;
@@ -322,6 +322,22 @@ textarea.input-brutalist {
   margin-bottom: 30px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 49px;
+  z-index: 90;
+  background: var(--bg-base);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50% + 1rem);
+  padding-right: calc(50vw - 50% + 1rem);
+}
+
+@media (min-width: 768px) {
+  .press-category-bar {
+    top: 51px;
+    padding-left: calc(50vw - 50% + 2rem);
+    padding-right: calc(50vw - 50% + 2rem);
+  }
 }
 
 .press-category-link {
@@ -673,4 +689,412 @@ textarea.input-brutalist {
   font-family: var(--font-display);
   font-size: 32px;
   color: var(--border-color);
+}
+
+/* ============================================================================
+   MODAL / POPUP OVERLAY (Directorio therapist detail)
+   ============================================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 40px 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background: var(--text-light);
+  border-radius: 16px;
+  max-width: 640px;
+  width: 100%;
+  border: 1px solid var(--text-dark);
+  overflow: hidden;
+  position: relative;
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--text-dark);
+  color: var(--text-light);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: var(--accent-glow);
+  color: var(--text-dark);
+  transform: scale(1.1);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Contact buttons ── */
+.contact-btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.contact-btn-whatsapp {
+  background: #25d366;
+  color: white;
+  border: 1px solid #25d366;
+}
+
+.contact-btn-whatsapp:hover {
+  background: #1ebe5a;
+}
+
+.contact-btn-email {
+  background: var(--text-dark);
+  color: var(--text-light);
+  border: 1px solid var(--text-dark);
+}
+
+.contact-btn-email:hover {
+  background: var(--text-light);
+  color: var(--text-dark);
+}
+
+/* ── Map embed ── */
+.modal-map {
+  margin-top: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.modal-map iframe {
+  width: 100%;
+  height: 200px;
+  border: 0;
+  display: block;
+}
+
+/* ============================================================================
+   CALENDAR (Congresos)
+   ============================================================================ */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 40px;
+}
+
+.calendar-day-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 8px 4px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--text-light);
+  transition: var(--transition-fast);
+  cursor: default;
+  position: relative;
+}
+
+.calendar-day:hover {
+  border-color: var(--text-dark);
+}
+
+.calendar-day.has-event {
+  background: var(--accent-glow);
+  border-color: var(--text-dark);
+  cursor: pointer;
+}
+
+.calendar-day.has-event:hover {
+  transform: scale(1.05);
+  z-index: 5;
+}
+
+.calendar-day.other-month {
+  opacity: 0.3;
+}
+
+.calendar-day .day-number {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.calendar-day .day-event-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dark);
+  align-self: flex-end;
+}
+
+.calendar-day .day-event-title {
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--text-dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-nav h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.calendar-nav button {
+  background: var(--text-dark);
+  color: var(--text-light);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  transition: var(--transition-fast);
+}
+
+.calendar-nav button:hover {
+  background: var(--accent-glow);
+  color: var(--text-dark);
+}
+
+/* ============================================================================
+   CONCERT-STYLE EVENT DETAIL
+   ============================================================================ */
+
+.event-hero {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
+}
+
+.event-hero img {
+  width: 100%;
+  height: clamp(280px, 50vw, 500px);
+  object-fit: cover;
+}
+
+.event-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(20px, 4vw, 40px);
+}
+
+.event-hero-badge {
+  display: inline-block;
+  background: var(--accent-glow);
+  color: var(--text-dark);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+
+.event-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 6vw, 52px);
+  color: white;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.event-hero-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.event-hero-meta-item {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ── Speakers section ── */
+.speakers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.speaker-card {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: var(--transition-fast);
+}
+
+.speaker-card:hover {
+  border-color: var(--text-dark);
+  transform: translateY(-2px);
+}
+
+.speaker-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  background: var(--text-dark);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 28px;
+  border: 2px solid var(--text-dark);
+}
+
+.speaker-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.speaker-role {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.speaker-topic {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── Agenda timeline ── */
+.agenda-timeline {
+  position: relative;
+  padding-left: 24px;
+}
+
+.agenda-timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.agenda-item {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.agenda-item::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-dark);
+  border: 2px solid var(--text-light);
+}
+
+.agenda-time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.agenda-title {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.agenda-speaker {
+  font-size: 12px;
+  color: var(--text-muted);
 }

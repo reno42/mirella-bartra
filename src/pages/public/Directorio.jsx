@@ -4,12 +4,14 @@ import { Helmet } from 'react-helmet-async'
 import { db } from '@/lib/supabase.js'
 import { generateMetaTags } from '@/lib/seo.js'
 import LoadingSpinner from '@/components/LoadingSpinner.jsx'
+import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
 export default function Directorio() {
   const [entries, setEntries] = useState([])
   const [specialties, setSpecialties] = useState([])
   const [selectedSpecialty, setSelectedSpecialty] = useState('')
   const [loading, setLoading] = useState(true)
+  const [selectedTherapist, setSelectedTherapist] = useState(null)
 
   useEffect(() => {
     Promise.all([
@@ -78,7 +80,11 @@ export default function Directorio() {
           ) : (
             <div className="grid-auto-fill">
               {filtered.map(entry => (
-                <Link key={entry.id} to={`/directorio/${entry.slug}`} style={{ textDecoration: 'none' }}>
+                <div
+                  key={entry.id}
+                  onClick={() => setSelectedTherapist(entry)}
+                  style={{ textDecoration: 'none', cursor: 'pointer' }}
+                >
                   <div className="card-brutalist" style={{ height: '100%' }}>
                     <div style={{ padding: '16px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
@@ -102,12 +108,143 @@ export default function Directorio() {
                       </div>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           )}
+
+          <NewsletterCTA />
         </>
       )}
+
+      {/* ── Therapist Modal Popup ── */}
+      {selectedTherapist && (
+        <TherapistModal
+          therapist={selectedTherapist}
+          onClose={() => setSelectedTherapist(null)}
+        />
+      )}
     </>
+  )
+}
+
+// ─── Therapist Modal Component ─────────────────────────────────
+function TherapistModal({ therapist, onClose }) {
+  const [contactSent, setContactSent] = useState(false)
+  const phoneClean = therapist.phone ? therapist.phone.replace(/[^0-9]/g, '') : ''
+  const whatsappUrl = phoneClean ? `https://wa.me/${phoneClean}` : ''
+  const emailUrl = therapist.email ? `mailto:${therapist.email}` : ''
+  const mapQuery = encodeURIComponent(`${therapist.full_name}, ${therapist.city || ''}, ${therapist.country || 'Perú'}`)
+  const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=-77.15%2C-12.15%2C-76.95%2C-11.95&layer=mapnik&marker=-12.05%2C-77.05`
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose} aria-label="Cerrar">✕</button>
+
+        <div className="modal-body">
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+            <div style={{
+              width: '72px', height: '72px', borderRadius: '50%', background: 'var(--text-dark)',
+              color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontWeight: 700, fontSize: '24px', fontFamily: 'var(--font-display)', flexShrink: 0,
+              border: '2px solid var(--text-dark)',
+            }}>
+              {therapist.full_name?.charAt(0) || '?'}
+            </div>
+            <div>
+              <h2 className="font-display" style={{ fontSize: '22px', lineHeight: 1.2, marginBottom: '6px' }}>
+                {therapist.full_name}
+              </h2>
+              <span className="tag">{therapist.specialty || 'Fonoaudiología'}</span>
+            </div>
+          </div>
+
+          {/* Info cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
+            {therapist.city && (
+              <div className="card-brutalist" style={{ padding: '10px', fontSize: '12px' }}>📍 {therapist.city}</div>
+            )}
+            {therapist.years_experience > 0 && (
+              <div className="card-brutalist" style={{ padding: '10px', fontSize: '12px' }}>📋 {therapist.years_experience} años exp.</div>
+            )}
+            {therapist.institution && (
+              <div className="card-brutalist" style={{ padding: '10px', fontSize: '12px' }}>🎓 {therapist.institution}</div>
+            )}
+            {therapist.offers_online && therapist.offers_presencial && (
+              <div className="card-brutalist" style={{ padding: '10px', fontSize: '12px' }}>💻 Online + 🏠 Presencial</div>
+            )}
+          </div>
+
+          {/* Bio */}
+          {therapist.bio && (
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '6px' }}>Biografía</div>
+              <p style={{ fontSize: '13px', color: 'var(--text-dark)', lineHeight: 1.7 }}>{therapist.bio}</p>
+            </div>
+          )}
+
+          {/* Contact buttons */}
+          <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>Contacto directo</div>
+          <div className="contact-btn-row">
+            {whatsappUrl && (
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="contact-btn contact-btn-whatsapp">
+                WhatsApp
+              </a>
+            )}
+            {emailUrl && (
+              <a href={emailUrl} className="contact-btn contact-btn-email">
+                Correo
+              </a>
+            )}
+          </div>
+
+          {/* Contact form */}
+          {!contactSent ? (
+            <form
+              style={{ marginTop: '20px' }}
+              onSubmit={async (e) => {
+                e.preventDefault()
+                const name = e.target.name.value
+                const email = e.target.email.value
+                const message = e.target.message.value
+                const { error } = await db.createLead({
+                  name,
+                  email,
+                  message: `Contacto para ${therapist.full_name}: ${message}`,
+                  source: 'directorio_modal',
+                  therapist_id: therapist.id,
+                })
+                if (!error) setContactSent(true)
+              }}
+            >
+              <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>Enviar mensaje</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
+                <input name="name" type="text" placeholder="Tu nombre" required className="input-brutalist" style={{ fontSize: '12px' }} />
+                <input name="email" type="email" placeholder="Tu correo" required className="input-brutalist" style={{ fontSize: '12px' }} />
+              </div>
+              <textarea name="message" placeholder="Tu mensaje" required className="input-brutalist" style={{ fontSize: '12px', minHeight: '80px', marginBottom: '8px' }} />
+              <button type="submit" className="btn-primary btn-small" style={{ width: '100%' }}>Enviar mensaje</button>
+            </form>
+          ) : (
+            <div style={{ marginTop: '20px', padding: '16px', border: '1px solid var(--accent-glow)', borderRadius: '8px', textAlign: 'center' }}>
+              <p style={{ fontSize: '13px', fontWeight: 700 }}>¡Mensaje enviado! El terapeuta se pondrá en contacto pronto.</p>
+            </div>
+          )}
+
+          {/* Map */}
+          {therapist.city && (
+            <div className="modal-map">
+              <iframe
+                src={mapSrc}
+                title={`Ubicación de ${therapist.full_name}`}
+                loading="lazy"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }

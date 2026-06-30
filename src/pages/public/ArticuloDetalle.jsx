@@ -5,6 +5,7 @@ import { db } from '@/lib/supabase.js'
 import { generateArticleLD, generateBreadcrumbLD, generateMetaTags } from '@/lib/seo.js'
 import { formatDate } from '@/utils/dateUtils.js'
 import LoadingSpinner from '@/components/LoadingSpinner.jsx'
+import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
 export default function ArticuloDetalle() {
   const { slug } = useParams()
@@ -162,6 +163,8 @@ export default function ArticuloDetalle() {
           </div>
         </section>
       )}
+
+      <NewsletterCTA />
 
       <style>{`
         .article-content h2 { font-family: var(--font-display); font-size: 22px; margin: 28px 0 12px; text-transform: uppercase; }
