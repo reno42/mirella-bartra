@@ -56,8 +56,11 @@ export default function Footer() {
 
           <div className="footer-col">
             <h3 className="font-mono" style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', marginBottom: '12px', color: 'var(--text-muted)' }}>
-              Mirella Bartra
+              MIRELLABARTRA.COM
             </h3>
+            <div className="font-mono" style={{ fontSize: '9px', color: 'var(--text-muted)', marginBottom: '10px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              Primer medio de prensa para terapeutas
+            </div>
             <p style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>
               Fonoaudióloga peruana, docente en la UNFV. Especialista en terapia de lenguaje, habla, voz y deglución.
               Primera plataforma de medios para terapeutas del continente.
@@ -72,6 +75,7 @@ export default function Footer() {
       <style>{`
         .footer {
           border-top: 1px solid var(--border-color);
+          box-shadow: 0 -3px 0 var(--accent-glow);
           padding: 40px 0 30px;
           margin-top: 60px;
         }

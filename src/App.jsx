@@ -58,6 +58,8 @@ import AdminUsers from '@/pages/admin/Users.jsx'
 import AdminDeposits from '@/pages/admin/Deposits.jsx'
 import AdminBidding from '@/pages/admin/Bidding.jsx'
 import AdminB2B from '@/pages/admin/B2B.jsx'
+import AdminCRM from '@/pages/admin/CRM.jsx'
+import AdminCertificados from '@/pages/admin/Certificados.jsx'
 
 // Init loading interceptor
 import '@/lib/loadingInterceptor.js'
@@ -145,6 +147,8 @@ export default function App() {
               <Route path="deposits" element={<AdminDeposits />} />
               <Route path="bidding" element={<AdminBidding />} />
               <Route path="b2b" element={<AdminB2B />} />
+              <Route path="crm" element={<AdminCRM />} />
+              <Route path="certificados" element={<AdminCertificados />} />
             </Route>
           </Routes>
         </BrowserRouter>

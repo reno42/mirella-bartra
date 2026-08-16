@@ -92,8 +92,9 @@ export default function Home() {
         <>
           {/* ── Masthead ── */}
           <div className="press-masthead">
-            <h1>FONOAUDIOLOGÍA</h1>
-            <div className="press-subtitle">Noticias · Papers · Congresos · Comunidad</div>
+            <h1>MIRELLABARTRA<span style={{ color: '#0d9488' }}>.COM</span></h1>
+            <div className="press-subtitle">Primer medio de prensa para terapeutas</div>
+            <div className="press-subtitle-secondary">Noticias · Papers · Congresos · Comunidad</div>
           </div>
 
           {/* ── Dateline ── */}
@@ -142,8 +143,12 @@ export default function Home() {
                 <div className="press-side-stories">
                   {sideArticles.map((article) => (
                     <Link key={article.id} to={`/articulos/${article.slug}`} className="press-side-story">
-                      {article.featured_image && (
+                      {article.featured_image ? (
                         <img src={article.featured_image} alt="" />
+                      ) : (
+                        <div className="press-side-story-thumb">
+                          {article.title.charAt(0)}
+                        </div>
                       )}
                       <div>
                         <div className="press-side-category">

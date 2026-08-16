@@ -28,6 +28,13 @@ const DEFAULT_CONFIG = {
   newsletter_cta: 'Suscríbete a nuestro newsletter',
   footer_text: '© Mirella Bartra. Todos los derechos reservados.',
   maintenance_mode: false,
+  popup_enabled: true,
+  popup_title: '¡20% de Descuento!',
+  popup_subtitle: 'Suscríbete y obtén 20% OFF en tu primer taller o congreso',
+  popup_discount_percent: 20,
+  popup_offer_type: 'talleres y congresos',
+  popup_cta_text: 'Quiero mi descuento',
+  popup_success_message: '¡Listo! Revisa tu correo para recibir tu código de descuento.',
 }
 
 export default function Config() {
@@ -151,6 +158,16 @@ export default function Config() {
           <Field label="Hero Subheadline" name="hero_subheadline" />
           <Field label="Newsletter CTA" name="newsletter_cta" />
           <Field label="Footer Text" name="footer_text" />
+        </Section>
+
+        <Section title="Popup de Descuento (Captura de Leads)">
+          <Field label="Popup activo" name="popup_enabled" isCheckbox placeholder="Mostrar popup en sitio público" />
+          <Field label="Título" name="popup_title" placeholder="¡20% de Descuento!" />
+          <Field label="Subtítulo" name="popup_subtitle" isTextarea placeholder="Descripción de la oferta" />
+          <Field label="% de descuento" name="popup_discount_percent" type="number" placeholder="20" />
+          <Field label="Tipo de oferta" name="popup_offer_type" placeholder="talleres y congresos" />
+          <Field label="Texto del botón" name="popup_cta_text" placeholder="Quiero mi descuento" />
+          <Field label="Mensaje de éxito" name="popup_success_message" isTextarea placeholder="Mensaje al suscribirse" />
         </Section>
 
         <div style={{ marginTop: '16px', display: 'flex', gap: '10px' }}>

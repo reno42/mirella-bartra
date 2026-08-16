@@ -18,9 +18,10 @@ export default function Header() {
     <header className="header">
       <div className="container header-inner">
         <Link to="/" className="header-logo" onClick={() => setMenuOpen(false)}>
-          <span className="font-display" style={{ fontSize: 'clamp(16px, 3.5vw, 24px)', letterSpacing: '0.05em' }}>
-            MIRELLA BARTRA
+          <span className="font-display" style={{ fontSize: 'clamp(15px, 3.2vw, 22px)', letterSpacing: '0.02em', lineHeight: 1 }}>
+            MIRELLABARTRA<span className="logo-com" style={{ color: '#0d9488' }}>.COM</span>
           </span>
+          <span className="header-logo-tagline">Primer medio de prensa para terapeutas</span>
         </Link>
 
         <button
@@ -63,6 +64,7 @@ export default function Header() {
           z-index: 100;
           background: var(--bg-base);
           border-bottom: 1px solid var(--border-color);
+          box-shadow: 0 3px 0 var(--accent-glow);
           padding: 8px 0;
         }
         .header-inner {
@@ -74,8 +76,20 @@ export default function Header() {
           text-decoration: none;
           color: var(--text-dark);
         }
-        .header-logo span {
+        .header-logo > span {
           display: block;
+        }
+        .header-logo .logo-com {
+          display: inline;
+        }
+        .header-logo-tagline {
+          display: block;
+          font-family: var(--font-mono);
+          font-size: 8px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--text-muted);
+          margin-top: 2px;
         }
         .header-nav {
           display: flex;

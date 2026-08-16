@@ -1,6 +1,6 @@
 import { Outlet, Link, NavLink, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { auth } from '@/lib/supabase.js'
+import { auth, users } from '@/lib/supabase.js'
 
 const SIDEBAR_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: '📊', end: true },
@@ -8,6 +8,7 @@ const SIDEBAR_ITEMS = [
   { to: '/admin/cursos', label: 'Cursos', icon: '🎓' },
   { to: '/admin/eventos', label: 'Eventos', icon: '📅' },
   { to: '/admin/directorio', label: 'Directorio', icon: '👥' },
+  { to: '/admin/crm', label: 'CRM', icon: '🤝' },
   { to: '/admin/leads', label: 'Leads', icon: '📧' },
   { to: '/admin/subscribers', label: 'Suscriptores', icon: '📬' },
   { to: '/admin/faqs', label: 'FAQs', icon: '❓' },
@@ -21,13 +22,22 @@ const SIDEBAR_ITEMS = [
   { to: '/admin/users', label: 'Usuarios', icon: '🔑' },
 ]
 
+// Admin-only modules
+const ADMIN_ONLY_ITEMS = [
+  { to: '/admin/certificados', label: 'Certificados', icon: '🏅' },
+]
+
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
     auth.getCurrentUser().then(({ user }) => setUser(user))
+    users.getMyProfile().then(({ data }) => {
+      setIsAdmin(data?.role === 'admin')
+    }).catch(() => setIsAdmin(false))
   }, [])
 
   const handleLogout = async () => {
@@ -45,7 +55,7 @@ export default function AdminLayout() {
           </span>
         </button>
         <Link to="/admin" className="font-display" style={{ fontSize: '14px', textDecoration: 'none', color: 'var(--text-dark)' }}>
-          MIRELLA ADMIN
+          MIRELLABARTRA<span style={{ color: '#0d9488' }}>.COM</span>
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{user?.email}</span>
@@ -70,6 +80,24 @@ export default function AdminLayout() {
                 {item.label}
               </NavLink>
             ))}
+            {isAdmin && (
+              <>
+                <div style={{ padding: '14px 16px 6px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
+                  Solo Admin
+                </div>
+                {ADMIN_ONLY_ITEMS.map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <span className="admin-nav-icon">{item.icon}</span>
+                    {item.label}
+                  </NavLink>
+                ))}
+              </>
+            )}
           </nav>
         </aside>
 

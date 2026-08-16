@@ -1093,3 +1093,382 @@ textarea.input-brutalist {
   font-size: 12px;
   color: var(--text-muted);
 }
+
+/* ============================================================================
+   DISCOUNT POPUP (lead capture modal)
+   ============================================================================ */
+
+.discount-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: discountPopupFadeIn 0.3s ease-out;
+}
+
+@keyframes discountPopupFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.discount-popup-card {
+  position: relative;
+  background: var(--bg-base);
+  border: 2px solid var(--text-dark);
+  border-radius: 16px;
+  max-width: 420px;
+  width: 100%;
+  padding: clamp(28px, 5vw, 44px);
+  text-align: center;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
+  animation: discountPopupSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes discountPopupSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.discount-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.discount-popup-close:hover {
+  color: var(--text-dark);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.discount-popup-badge {
+  display: inline-block;
+  background: var(--accent-glow);
+  color: var(--text-dark);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  padding: 6px 18px;
+  border-radius: 8px;
+  border: 2px solid var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.discount-popup-title {
+  font-size: clamp(22px, 5vw, 30px);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.discount-popup-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.discount-popup-offer {
+  font-size: 12px;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.discount-popup-offer strong {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.discount-popup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.discount-popup-form .input-brutalist {
+  padding: 11px 14px;
+  font-size: 13px;
+}
+
+.discount-popup-form button {
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 2px solid var(--text-dark);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.discount-popup-form button:hover {
+  transform: translateY(-1px);
+}
+
+.discount-popup-dismiss {
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: var(--transition-fast);
+}
+
+.discount-popup-dismiss:hover {
+  color: var(--text-dark);
+}
+
+.discount-popup-success {
+  padding: 20px 0;
+}
+
+.discount-popup-success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 2px solid var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 auto 16px;
+}
+
+.discount-popup-success p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .discount-popup-card {
+    border-radius: 12px;
+    padding: 24px 20px;
+  }
+  .discount-popup-badge {
+    font-size: 16px;
+  }
+}
+
+/* ============================================================================
+   BRAND ACCENT ENHANCEMENTS (verde quirúrgico pastel layer)
+   Applied as high-specificity overrides to infuse the brand color across
+   the interface without breaking the brutalist base system.
+   ============================================================================ */
+
+/* -- Global selection & focus -- */
+::selection {
+  background: var(--accent-glow);
+  color: var(--text-dark);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #0d9488;
+  outline-offset: 2px;
+}
+
+/* -- Masthead brand underline -- */
+.press-masthead {
+  border-bottom: 3px solid var(--text-dark);
+  box-shadow: inset 0 -7px 0 var(--accent-glow);
+}
+
+.press-subtitle {
+  color: #0d9488;
+  font-weight: 700;
+}
+
+.press-subtitle-secondary {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* -- Dateline accent -- */
+.press-dateline {
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: inset 0 -4px 0 var(--accent-glow);
+}
+
+/* -- Category bar: active/hover with brand accent -- */
+.press-category-link:hover,
+.press-category-link.active {
+  background: var(--accent-glow);
+  color: var(--text-dark);
+  box-shadow: inset 0 -3px 0 var(--text-dark);
+}
+
+/* -- Section separators with accent underline -- */
+.section-separator {
+  border-bottom: 2px solid var(--text-dark);
+  box-shadow: inset 0 -5px 0 var(--accent-glow);
+}
+
+/* -- Press cards: category labels in brand tone -- */
+.press-lead-story .press-lead-category,
+.press-side-story .press-side-category,
+.press-article-card-body .press-card-category {
+  color: #0d9488;
+}
+
+/* -- Tags: solid tag now carries the accent -- */
+.tag {
+  background: var(--text-dark);
+  box-shadow: inset 0 -3px 0 var(--accent-glow);
+}
+
+/* -- Buttons: brand hover states -- */
+.btn-primary:hover {
+  background: var(--accent-glow);
+  color: var(--text-dark);
+  border-color: var(--text-dark);
+}
+
+.btn-outline:hover {
+  background: var(--accent-glow);
+  color: var(--text-dark);
+}
+
+.btn-accent {
+  border-color: var(--text-dark);
+}
+
+/* -- Cards: accent hover edge -- */
+.card-brutalist {
+  transition: var(--transition-fast);
+}
+
+.card-brutalist:hover {
+  box-shadow: -3px 3px 0 var(--accent-glow);
+}
+
+/* -- Article content links -- */
+.article-content a {
+  color: #0d9488;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-glow);
+  text-underline-offset: 3px;
+}
+
+/* -- Back links -- */
+.back-link {
+  color: #0d9488;
+}
+
+/* -- Calendar today & event markers -- */
+.calendar-day.today {
+  background: var(--accent-glow);
+  font-weight: 700;
+}
+
+.calendar-day.has-event {
+  box-shadow: inset 0 -3px 0 var(--accent-glow);
+}
+
+/* -- Scrollbar with brand accent -- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 6px;
+  border: 2px solid var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-glow);
+}
+
+/* -- Footer links hover -- */
+.footer-link:hover {
+  color: #0d9488;
+}
+
+/* -- Newsletter CTA: accent top edge -- */
+.newsletter-cta-accent {
+  box-shadow: inset 0 5px 0 var(--accent-glow);
+}
+
+/* -- Admin nav active with accent -- */
+.admin-nav-link.active {
+  box-shadow: inset 4px 0 0 var(--accent-glow);
+}
+
+/* -- Inputs: brand focus -- */
+.input-brutalist:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px var(--accent-glow);
+  outline: none;
+}
+
+/* -- Speaker avatars & top therapist cards -- */
+.speaker-avatar {
+  background: var(--accent-glow);
+  border: 2px solid var(--text-dark);
+}
+
+.therapist-card-top,
+.top-therapist-card {
+  background: linear-gradient(135deg, var(--accent-glow) 0%, var(--bg-base) 70%);
+  border: 2px solid var(--text-dark);
+}
+
+/* -- Hero badges -- */
+.event-hero-badge {
+  box-shadow: 0 2px 0 var(--text-dark);
+}
+
+/* -- Side story branded thumbnail (fallback when no image) -- */
+.press-side-story-thumb {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-glow);
+  border: 1px solid var(--text-dark);
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--text-dark);
+  text-transform: uppercase;
+}

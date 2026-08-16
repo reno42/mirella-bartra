@@ -308,6 +308,49 @@ export const db = {
     return { data, error }
   },
 
+  // ── Event Registrations (inscritos a eventos) ──
+  getEventRegistrations: async (eventId) => {
+    const { data, error } = await supabase.from('event_registrations').select('*').eq('event_id', eventId).order('created_at', { ascending: false })
+    return { data, error }
+  },
+
+  getAllEventRegistrations: async () => {
+    const { data, error } = await supabase.from('event_registrations').select('*, events(name, title)').order('created_at', { ascending: false })
+    return { data, error }
+  },
+
+  createEventRegistration: async (registration) => {
+    const { data, error } = await supabase.from('event_registrations').insert(registration).select().single()
+    return { data, error }
+  },
+
+  updateEventRegistration: async (id, updates) => {
+    const { data, error } = await supabase.from('event_registrations').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', id).select().single()
+    return { data, error }
+  },
+
+  // ── Certificates ──
+  createCertificates: async (certificates) => {
+    const { data, error } = await supabase.from('certificates').insert(certificates).select()
+    return { data, error }
+  },
+
+  getCertificates: async () => {
+    const { data, error } = await supabase.from('certificates').select('*').order('created_at', { ascending: false })
+    return { data, error }
+  },
+
+  // ── CRM (views created in SQL) ──
+  getCRMContacts: async () => {
+    const { data, error } = await supabase.from('v_crm_contacts').select('*').order('last_activity', { ascending: false })
+    return { data, error }
+  },
+
+  getCRMTimeline: async (email) => {
+    const { data, error } = await supabase.from('v_crm_timeline').select('*').eq('contact_email', email).order('activity_date', { ascending: false })
+    return { data, error }
+  },
+
   // ── Media ──
   getMedia: async () => {
     const { data, error } = await supabase.from('media').select('*').order('created_at', { ascending: false })
@@ -422,6 +465,13 @@ export const storage = {
 export const users = {
   getAll: async () => {
     const { data, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
+    return { data, error }
+  },
+
+  getMyProfile: async () => {
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) return { data: null, error: userError }
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', user.id).single()
     return { data, error }
   },
 
