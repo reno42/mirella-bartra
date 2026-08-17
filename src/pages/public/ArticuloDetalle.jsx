@@ -164,6 +164,11 @@ export default function ArticuloDetalle() {
             {related.map(a => (
               <Link key={a.id} to={`/articulos/${a.slug}`} style={{ textDecoration: 'none' }}>
                 <div className="card-brutalist" style={{ height: '100%' }}>
+                  {a.featured_image ? (
+                    <img src={a.featured_image} alt="" style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                  ) : (
+                    <div className="card-image-fallback">{(a.title || '?').charAt(0)}</div>
+                  )}
                   <div style={{ padding: '16px' }}>
                     <span className="tag tag-outline">{a.articleSection || 'Artículo'}</span>
                     <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, margin: '8px 0 4px', color: 'var(--text-dark)' }}>

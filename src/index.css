@@ -183,6 +183,7 @@ textarea.input-brutalist {
 .card-brutalist:hover {
   border-color: var(--text-dark);
   transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(167, 243, 208, 0.65);
 }
 
 /* ---- Tags / Badges ---- */
@@ -340,9 +341,12 @@ textarea.input-brutalist {
    Reuses brutalist tokens but adds editorial/magazine structure.
    ============================================================================ */
 
-/* ── Category Bar (Sticky, Full-Width) ── */
+/* ── Category Bar (Sticky) ──
+   Solo mobile: aparece únicamente cuando la navbar colapsa al menú
+   hamburguesa (≤768px). En desktop la navbar ya muestra los botones
+   y esta barra no debe salir. */
 .press-category-bar {
-  display: flex;
+  display: none;
   gap: 0;
   border-top: 1px solid var(--text-dark);
   border-bottom: 1px solid var(--text-dark);
@@ -350,7 +354,7 @@ textarea.input-brutalist {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   position: sticky;
-  top: 49px;
+  top: 56px;
   z-index: 90;
   background: var(--bg-base);
   width: 100vw;
@@ -359,11 +363,9 @@ textarea.input-brutalist {
   padding-right: calc(50vw - 50% + 1rem);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .press-category-bar {
-    top: 51px;
-    padding-left: calc(50vw - 50% + 2rem);
-    padding-right: calc(50vw - 50% + 2rem);
+    display: flex;
   }
 }
 
@@ -447,6 +449,11 @@ textarea.input-brutalist {
   text-decoration: none;
 }
 
+.press-lead-story:hover img {
+  border-color: var(--text-dark);
+  box-shadow: 0 12px 28px rgba(167, 243, 208, 0.65);
+}
+
 .press-lead-story img {
   width: 100%;
   height: clamp(200px, 30vw, 360px);
@@ -454,6 +461,7 @@ textarea.input-brutalist {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   margin-bottom: 16px;
+  transition: var(--transition-fast);
 }
 
 .press-lead-story .press-lead-category {
@@ -508,6 +516,15 @@ textarea.input-brutalist {
 }
 
 .press-side-story img {
+  transition: var(--transition-fast);
+}
+
+.press-side-story:hover img {
+  border-color: var(--text-dark);
+  box-shadow: 0 6px 16px rgba(167, 243, 208, 0.75);
+}
+
+.press-side-story img {
   width: 80px;
   height: 80px;
   object-fit: cover;
@@ -550,6 +567,20 @@ textarea.input-brutalist {
   text-decoration: none;
   display: flex;
   flex-direction: column;
+  transition: var(--transition-fast);
+}
+
+.press-article-card:hover {
+  transform: translateY(-2px);
+}
+
+.press-article-card:hover img {
+  border-color: var(--text-dark);
+  box-shadow: 0 10px 24px rgba(167, 243, 208, 0.65);
+}
+
+.press-article-card:hover .press-article-card-body {
+  border-color: var(--text-dark);
 }
 
 .press-article-card img {
@@ -559,6 +590,7 @@ textarea.input-brutalist {
   border-radius: 8px 8px 0 0;
   border: 1px solid var(--border-color);
   border-bottom: none;
+  transition: var(--transition-fast);
 }
 
 .press-article-card-body {

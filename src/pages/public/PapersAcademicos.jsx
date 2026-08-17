@@ -90,7 +90,6 @@ export default function PapersAcademicos() {
           {/* Dateline */}
           <div className="press-dateline">
             <span>{today}</span>
-            <span>Edición Digital</span>
           </div>
 
           {/* Category Bar — same as Home (page navigation) */}

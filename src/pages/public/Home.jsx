@@ -106,7 +106,6 @@ export default function Home() {
           {/* ── Dateline ── */}
           <div className="press-dateline">
             <span>{today}</span>
-            <span>Edición Digital · N° 001</span>
           </div>
 
           {/* ── Category Bar ── */}
@@ -253,6 +252,11 @@ export default function Home() {
                 {congresosItems.slice(0, 3).map((item) => (
                   <Link key={`${item.id}-${item.slug}`} to={item._route} style={{ textDecoration: 'none' }}>
                     <div className="card-brutalist" style={{ height: '100%' }}>
+                      {item.featured_image ? (
+                        <img src={item.featured_image} alt="" style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                      ) : (
+                        <div className="card-image-fallback">{(item.title || item.name || '?').charAt(0)}</div>
+                      )}
                       <div style={{ padding: '16px' }}>
                         <span className="tag">
                           {item.modality === 'virtual' ? 'VIRTUAL' : item.event_status === 'ongoing' ? 'EN VIVO' : 'PRÓXIMO'}

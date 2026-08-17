@@ -55,8 +55,10 @@ export default function Cursos() {
               {courses.map(course => (
                 <Link key={course.id} to={`/cursos/${course.slug}`} style={{ textDecoration: 'none' }}>
                   <div className="card-brutalist" style={{ height: '100%' }}>
-                    {course.featured_image && (
+                    {course.featured_image ? (
                       <img src={course.featured_image} alt="" style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                    ) : (
+                      <div className="card-image-fallback">{(course.title || '?').charAt(0)}</div>
                     )}
                     <div style={{ padding: '16px' }}>
                       <span className="tag tag-outline">{course.modality === 'virtual' ? 'VIRTUAL' : course.modality === 'presencial' ? 'PRESENCIAL' : 'HÍBRIDO'}</span>
