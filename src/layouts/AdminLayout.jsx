@@ -25,6 +25,7 @@ const SIDEBAR_ITEMS = [
 // Admin-only modules
 const ADMIN_ONLY_ITEMS = [
   { to: '/admin/certificados', label: 'Certificados', icon: '🏅' },
+  { to: '/admin/ticker', label: 'Ticker', icon: '📢' },
 ]
 
 export default function AdminLayout() {

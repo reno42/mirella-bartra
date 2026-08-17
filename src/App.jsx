@@ -60,6 +60,7 @@ import AdminBidding from '@/pages/admin/Bidding.jsx'
 import AdminB2B from '@/pages/admin/B2B.jsx'
 import AdminCRM from '@/pages/admin/CRM.jsx'
 import AdminCertificados from '@/pages/admin/Certificados.jsx'
+import AdminTicker from '@/pages/admin/Ticker.jsx'
 
 // Init loading interceptor
 import '@/lib/loadingInterceptor.js'
@@ -149,6 +150,7 @@ export default function App() {
               <Route path="b2b" element={<AdminB2B />} />
               <Route path="crm" element={<AdminCRM />} />
               <Route path="certificados" element={<AdminCertificados />} />
+              <Route path="ticker" element={<AdminTicker />} />
             </Route>
           </Routes>
         </BrowserRouter>

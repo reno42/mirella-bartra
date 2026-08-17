@@ -1535,3 +1535,54 @@ select:focus-visible {
   color: var(--text-dark);
   text-transform: uppercase;
 }
+
+/* ── Barra superior (ticker) ──
+   Frases configurables desde el intranet (/admin/ticker). */
+.top-ticker {
+  background: var(--text-dark);
+  color: var(--text-light);
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 0;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: inline-flex;
+  will-change: transform;
+  animation: ticker-scroll 40s linear infinite;
+}
+
+.ticker-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ticker-item {
+  padding: 0 16px;
+}
+
+.ticker-sep {
+  color: var(--accent-glow);
+  margin-right: 8px;
+  font-size: 8px;
+  vertical-align: 1px;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Accesibilidad: sin movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}

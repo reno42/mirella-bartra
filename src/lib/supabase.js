@@ -276,6 +276,32 @@ export const db = {
     return { error }
   },
 
+  // ── Ticker (barra superior) ──
+  getTickerMessages: async () => {
+    const { data, error } = await supabase.from('ticker_messages').select('*').eq('is_active', true).order('sort_order', { ascending: true })
+    return { data, error }
+  },
+
+  getAllTickerMessages: async () => {
+    const { data, error } = await supabase.from('ticker_messages').select('*').order('sort_order', { ascending: true })
+    return { data, error }
+  },
+
+  createTickerMessage: async (msg) => {
+    const { data, error } = await supabase.from('ticker_messages').insert(msg).select().single()
+    return { data, error }
+  },
+
+  updateTickerMessage: async (id, updates) => {
+    const { data, error } = await supabase.from('ticker_messages').update(updates).eq('id', id).select().single()
+    return { data, error }
+  },
+
+  deleteTickerMessage: async (id) => {
+    const { error } = await supabase.from('ticker_messages').delete().eq('id', id)
+    return { error }
+  },
+
   // ── Complaints ──
   createComplaint: async (complaint) => {
     const { data, error } = await supabase.from('complaints_book').insert(complaint).select().single()

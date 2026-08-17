@@ -4,6 +4,7 @@ import Footer from '@/components/Footer.jsx'
 import CookieBanner from '@/components/CookieBanner.jsx'
 import SocialSidebar from '@/components/SocialSidebar.jsx'
 import DiscountPopup from '@/components/DiscountPopup.jsx'
+import TopTicker from '@/components/TopTicker.jsx'
 import { initConsent } from '@/utils/consentManager.js'
 import { useEffect } from 'react'
 
@@ -14,6 +15,7 @@ export default function PublicLayout() {
 
   return (
     <>
+      <TopTicker />
       <Header />
       <main className="container" style={{ minHeight: '70vh', paddingTop: '20px' }}>
         <div className="page-enter">
