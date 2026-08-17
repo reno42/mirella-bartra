@@ -459,6 +459,21 @@ export const storage = {
     const { data, error } = await supabase.storage.from(bucket).remove([path])
     return { data, error }
   },
+
+  // Foto de terapeuta del directorio (bucket media/, carpeta directorio/)
+  // La sube el admin desde el intranet o el propio terapeuta desde el
+  // formulario público (requiere 07_directorio_fotos.sql para la política).
+  uploadDirectoryPhoto: async (file) => {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+    const path = `directorio/${Date.now()}_${safeName}`
+    const { error } = await supabase.storage.from('media').upload(path, file, {
+      cacheControl: '3600',
+      upsert: true,
+    })
+    if (error) return { url: null, error }
+    const { data } = supabase.storage.from('media').getPublicUrl(path)
+    return { url: data.publicUrl, error: null }
+  },
 }
 
 // ─── User Management (admin) ──────────────────────────────────────────────────

@@ -28,7 +28,18 @@ export default function Directorio() {
             <tbody>
               {entries.map(e => (
                 <tr key={e.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                  <td style={{ padding: '8px', fontWeight: 600 }}>{e.full_name}</td>
+                  <td style={{ padding: '8px', fontWeight: 600 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      {e.photo_url ? (
+                        <img src={e.photo_url} alt="" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--text-dark)' }} />
+                      ) : (
+                        <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'var(--text-dark)', color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 700, fontFamily: 'var(--font-display)', flexShrink: 0 }}>
+                          {e.full_name?.charAt(0) || '?'}
+                        </div>
+                      )}
+                      {e.full_name}
+                    </div>
+                  </td>
                   <td style={{ padding: '8px' }}>{e.specialty || '-'}</td>
                   <td style={{ padding: '8px' }}>{e.city || '-'}</td>
                   <td style={{ padding: '8px', display: 'flex', gap: '6px' }}>

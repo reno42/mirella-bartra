@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { db } from '@/lib/supabase.js'
 import { generateOrganizationLD, generateWebSiteLD, generatePersonLD, generateFAQPageLD, generateBreadcrumbLD, generateMetaTags } from '@/lib/seo.js'
 import { formatDate, daysUntil, isDateInFuture } from '@/utils/dateUtils.js'
+import { useMatchWidth } from '@/hooks/useMatchWidth.js'
 import LoadingSpinner from '@/components/LoadingSpinner.jsx'
 import NewsletterCTA from '@/components/NewsletterCTA.jsx'
 
@@ -23,6 +24,11 @@ export default function Home() {
   const [testimonials, setTestimonials] = useState([])
   const [faqs, setFaqs] = useState([])
   const [loading, setLoading] = useState(true)
+  const mastheadRef = useRef(null)
+  const mastheadTaglineRef = useRef(null)
+
+  // El descriptor del masthead queda exactamente del ancho del wordmark
+  useMatchWidth(mastheadRef, mastheadTaglineRef)
 
   useEffect(() => {
     Promise.all([
@@ -92,8 +98,8 @@ export default function Home() {
         <>
           {/* ── Masthead ── */}
           <div className="press-masthead">
-            <h1>MIRELLABARTRA<span style={{ color: '#0d9488' }}>.COM</span></h1>
-            <div className="press-subtitle">Primer medio de prensa para terapeutas</div>
+            <h1 ref={mastheadRef}>MIRELLABARTRA.COM</h1>
+            <div ref={mastheadTaglineRef} className="press-subtitle press-subtitle-matched">Primer medio de prensa para terapeutas</div>
             <div className="press-subtitle-secondary">Noticias · Papers · Congresos · Comunidad</div>
           </div>
 
@@ -258,9 +264,9 @@ export default function Home() {
                           📅 {formatDate(item.start_date)}
                         </div>
                         {item.price > 0 ? (
-                          <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px' }}>S/ {item.price.toFixed(2)}</div>
+                          <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: '#0000EE' }}>S/ {item.price.toFixed(2)}</div>
                         ) : (
-                          <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: 'var(--accent-glow)' }}>Gratuito</div>
+                          <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: '#0000EE' }}>Gratuito</div>
                         )}
                       </div>
                     </div>

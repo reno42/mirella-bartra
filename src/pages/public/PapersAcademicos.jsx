@@ -102,14 +102,13 @@ export default function PapersAcademicos() {
             ))}
           </div>
 
-          {/* Topic Filter Bar */}
+          {/* Topic Filter Bar — lineal, sin relleno */}
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
             {PAPER_SECTIONS.map((cat) => (
               <button
                 key={cat}
-                className={`tag ${activeFilter === cat ? '' : 'tag-outline'}`}
+                className={`tag-filter ${activeFilter === cat ? 'active' : ''}`}
                 onClick={() => setActiveFilter(cat)}
-                style={{ cursor: 'pointer' }}
               >
                 {cat}
               </button>
@@ -153,8 +152,10 @@ export default function PapersAcademicos() {
                     <div className="press-side-stories">
                       {sidePapers.map((paper) => (
                         <Link key={paper.id} to={`/articulos/${paper.slug}`} className="press-side-story">
-                          {paper.featured_image && (
+                          {paper.featured_image ? (
                             <img src={paper.featured_image} alt="" />
+                          ) : (
+                            <div className="press-side-story-thumb">{paper.title.charAt(0)}</div>
                           )}
                           <div>
                             <div className="press-side-category">

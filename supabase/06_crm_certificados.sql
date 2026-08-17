@@ -56,6 +56,8 @@ CREATE INDEX IF NOT EXISTS idx_certificates_created ON certificates(created_at D
 ALTER TABLE certificates ENABLE ROW LEVEL SECURITY;
 
 -- Admin/editor: leer
+-- (Script re-ejecutable: las políticas se recrean en cada ejecución)
+DROP POLICY IF EXISTS "Certificates: admin read" ON certificates;
 CREATE POLICY "Certificates: admin read"
   ON certificates FOR SELECT
   USING (
@@ -66,6 +68,7 @@ CREATE POLICY "Certificates: admin read"
   );
 
 -- Admin: insertar (generación en lote)
+DROP POLICY IF EXISTS "Certificates: admin insert" ON certificates;
 CREATE POLICY "Certificates: admin insert"
   ON certificates FOR INSERT
   WITH CHECK (

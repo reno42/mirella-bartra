@@ -97,14 +97,13 @@ export default function Articulos() {
             ))}
           </div>
 
-          {/* Topic Filter Bar */}
+          {/* Topic Filter Bar — lineal, sin relleno */}
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
             {NEWS_SECTIONS.map((cat) => (
               <button
                 key={cat}
-                className={`tag ${activeFilter === cat ? '' : 'tag-outline'}`}
+                className={`tag-filter ${activeFilter === cat ? 'active' : ''}`}
                 onClick={() => setActiveFilter(cat)}
-                style={{ cursor: 'pointer' }}
               >
                 {cat}
               </button>
@@ -147,8 +146,10 @@ export default function Articulos() {
                     <div className="press-side-stories">
                       {sideArticles.map((article) => (
                         <Link key={article.id} to={`/articulos/${article.slug}`} className="press-side-story">
-                          {article.featured_image && (
+                          {article.featured_image ? (
                             <img src={article.featured_image} alt="" />
+                          ) : (
+                            <div className="press-side-story-thumb">{article.title.charAt(0)}</div>
                           )}
                           <div>
                             <div className="press-side-category">

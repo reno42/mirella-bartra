@@ -220,8 +220,10 @@ export default function Congresos() {
                     {filteredUpcoming.map((item) => (
                       <Link key={`${item._type}-${item.id}`} to={item._route} style={{ textDecoration: 'none' }}>
                         <div className="card-brutalist" style={{ height: '100%' }}>
-                          {item.featured_image && (
+                          {item.featured_image ? (
                             <img src={item.featured_image} alt="" style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                          ) : (
+                            <div className="card-image-fallback">{(item.title || item.name || '?').charAt(0)}</div>
                           )}
                           <div style={{ padding: '16px' }}>
                             <span className="tag">{getCategoryLabel(item._category)}</span>
@@ -235,9 +237,9 @@ export default function Congresos() {
                               {item.modality === 'virtual' ? '💻 Virtual' : item.location_url ? '💻 Virtual' : `📍 ${item.location || item.venue || 'Por confirmar'}`}
                             </div>
                             {item.price > 0 ? (
-                              <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px' }}>S/ {item.price.toFixed(2)}</div>
+                              <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: '#0000EE' }}>S/ {item.price.toFixed(2)}</div>
                             ) : (
-                              <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: 'var(--accent-glow)' }}>Gratuito</div>
+                              <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: '#0000EE' }}>Gratuito</div>
                             )}
                           </div>
                         </div>
@@ -254,6 +256,11 @@ export default function Congresos() {
                     {filteredPast.map((item) => (
                       <Link key={`${item._type}-${item.id}`} to={item._route} style={{ textDecoration: 'none' }}>
                         <div className="card-brutalist" style={{ height: '100%', opacity: 0.7 }}>
+                          {item.featured_image ? (
+                            <img src={item.featured_image} alt="" style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                          ) : (
+                            <div className="card-image-fallback">{(item.title || item.name || '?').charAt(0)}</div>
+                          )}
                           <div style={{ padding: '16px' }}>
                             <span className="tag tag-outline">{getCategoryLabel(item._category)}</span>
                             <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, margin: '8px 0 4px', color: 'var(--text-dark)' }}>

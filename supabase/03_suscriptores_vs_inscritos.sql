@@ -114,12 +114,16 @@ CREATE INDEX IF NOT EXISTS idx_event_reg_subscriber ON event_registrations(subsc
 -- RLS
 ALTER TABLE event_registrations ENABLE ROW LEVEL SECURITY;
 
+-- (Script re-ejecutable: las políticas se recrean en cada ejecución)
+
 -- Público: cualquiera puede inscribirse
+DROP POLICY IF EXISTS "Event_registrations: public insert" ON event_registrations;
 CREATE POLICY "Event_registrations: public insert"
   ON event_registrations FOR INSERT
   WITH CHECK (true);
 
 -- Solo el propio inscrito puede ver su registro (por email match en auth)
+DROP POLICY IF EXISTS "Event_registrations: self read" ON event_registrations;
 CREATE POLICY "Event_registrations: self read"
   ON event_registrations FOR SELECT
   USING (
@@ -131,6 +135,7 @@ CREATE POLICY "Event_registrations: self read"
   );
 
 -- Admins/editors: lectura y gestión total
+DROP POLICY IF EXISTS "Event_registrations: admin read" ON event_registrations;
 CREATE POLICY "Event_registrations: admin read"
   ON event_registrations FOR SELECT
   USING (
@@ -140,6 +145,7 @@ CREATE POLICY "Event_registrations: admin read"
     )
   );
 
+DROP POLICY IF EXISTS "Event_registrations: admin update" ON event_registrations;
 CREATE POLICY "Event_registrations: admin update"
   ON event_registrations FOR UPDATE
   USING (
@@ -149,6 +155,7 @@ CREATE POLICY "Event_registrations: admin update"
     )
   );
 
+DROP POLICY IF EXISTS "Event_registrations: admin delete" ON event_registrations;
 CREATE POLICY "Event_registrations: admin delete"
   ON event_registrations FOR DELETE
   USING (
@@ -159,6 +166,7 @@ CREATE POLICY "Event_registrations: admin delete"
   );
 
 -- Trigger updated_at
+DROP TRIGGER IF EXISTS trg_event_reg_updated_at ON event_registrations;
 CREATE TRIGGER trg_event_reg_updated_at
   BEFORE UPDATE ON event_registrations
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

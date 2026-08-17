@@ -55,7 +55,7 @@ export default function AdminLayout() {
           </span>
         </button>
         <Link to="/admin" className="font-display" style={{ fontSize: '14px', textDecoration: 'none', color: 'var(--text-dark)' }}>
-          MIRELLABARTRA<span style={{ color: '#0d9488' }}>.COM</span>
+          MIRELLABARTRA.COM
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{user?.email}</span>

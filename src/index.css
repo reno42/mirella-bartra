@@ -203,6 +203,33 @@ textarea.input-brutalist {
   border: 1px solid var(--text-dark);
 }
 
+/* Filtros: siempre lineales (borde + texto), nunca rellenos */
+.tag-filter {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.tag-filter:hover {
+  border-color: var(--text-dark);
+}
+
+.tag-filter.active {
+  border: 2px solid var(--text-dark);
+  font-weight: 800;
+  padding: 4px 11px;
+}
+
 /* ---- Section Separator ---- */
 .section-separator {
   font-family: var(--font-display);
@@ -1296,15 +1323,22 @@ select:focus-visible {
   outline-offset: 2px;
 }
 
-/* -- Masthead brand underline -- */
+/* -- Masthead: línea negra limpia, sin overlay verde -- */
 .press-masthead {
-  border-bottom: 3px solid var(--text-dark);
-  box-shadow: inset 0 -7px 0 var(--accent-glow);
+  border-bottom: 2px solid var(--text-dark);
 }
 
 .press-subtitle {
   color: #0d9488;
   font-weight: 700;
+}
+
+/* Descriptor del masthead: escala con el wordmark y se justa al ancho
+   exacto vía useMatchWidth (por eso letter-spacing: 0 aquí) */
+.press-subtitle-matched {
+  font-size: clamp(9.6px, 2.75vw, 22px);
+  letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .press-subtitle-secondary {
@@ -1316,24 +1350,21 @@ select:focus-visible {
   margin-top: 4px;
 }
 
-/* -- Dateline accent -- */
+/* -- Dateline -- */
 .press-dateline {
   border-bottom: 1px solid var(--border-color);
-  box-shadow: inset 0 -4px 0 var(--accent-glow);
 }
 
-/* -- Category bar: active/hover with brand accent -- */
+/* -- Category bar: hover/active en inversión brutalista -- */
 .press-category-link:hover,
 .press-category-link.active {
-  background: var(--accent-glow);
-  color: var(--text-dark);
-  box-shadow: inset 0 -3px 0 var(--text-dark);
+  background: var(--text-dark);
+  color: var(--text-light);
 }
 
-/* -- Section separators with accent underline -- */
+/* -- Section separators: línea negra limpia -- */
 .section-separator {
   border-bottom: 2px solid var(--text-dark);
-  box-shadow: inset 0 -5px 0 var(--accent-glow);
 }
 
 /* -- Press cards: category labels in brand tone -- */
@@ -1341,12 +1372,6 @@ select:focus-visible {
 .press-side-story .press-side-category,
 .press-article-card-body .press-card-category {
   color: #0d9488;
-}
-
-/* -- Tags: solid tag now carries the accent -- */
-.tag {
-  background: var(--text-dark);
-  box-shadow: inset 0 -3px 0 var(--accent-glow);
 }
 
 /* -- Buttons: brand hover states -- */
@@ -1387,14 +1412,10 @@ select:focus-visible {
   color: #0d9488;
 }
 
-/* -- Calendar today & event markers -- */
+/* -- Calendar: today destacado, eventos con borde -- */
 .calendar-day.today {
   background: var(--accent-glow);
   font-weight: 700;
-}
-
-.calendar-day.has-event {
-  box-shadow: inset 0 -3px 0 var(--accent-glow);
 }
 
 /* -- Scrollbar with brand accent -- */
@@ -1422,14 +1443,14 @@ select:focus-visible {
   color: #0d9488;
 }
 
-/* -- Newsletter CTA: accent top edge -- */
+/* -- Newsletter CTA: borde superior negro -- */
 .newsletter-cta-accent {
-  box-shadow: inset 0 5px 0 var(--accent-glow);
+  border-top: 3px solid var(--text-dark);
 }
 
-/* -- Admin nav active with accent -- */
+/* -- Admin nav active: marcador negro -- */
 .admin-nav-link.active {
-  box-shadow: inset 4px 0 0 var(--accent-glow);
+  box-shadow: inset 4px 0 0 var(--text-dark);
 }
 
 /* -- Inputs: brand focus -- */
@@ -1439,15 +1460,10 @@ select:focus-visible {
   outline: none;
 }
 
-/* -- Speaker avatars & top therapist cards -- */
-.speaker-avatar {
-  background: var(--accent-glow);
-  border: 2px solid var(--text-dark);
-}
-
+/* -- Top therapist cards: blancos con borde grueso (sin relleno) -- */
 .therapist-card-top,
 .top-therapist-card {
-  background: linear-gradient(135deg, var(--accent-glow) 0%, var(--bg-base) 70%);
+  background: white;
   border: 2px solid var(--text-dark);
 }
 
@@ -1469,6 +1485,21 @@ select:focus-visible {
   border-radius: 6px;
   font-family: var(--font-display);
   font-size: 30px;
+  color: var(--text-dark);
+  text-transform: uppercase;
+}
+
+/* Fallback de imagen para tarjetas de eventos (mismo slot que la imagen) */
+.card-image-fallback {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-glow);
+  border-bottom: 1px solid var(--text-dark);
+  font-family: var(--font-display);
+  font-size: 44px;
   color: var(--text-dark);
   text-transform: uppercase;
 }

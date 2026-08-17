@@ -1,11 +1,17 @@
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { auth } from '@/lib/supabase.js'
+import { useMatchWidth } from '@/hooks/useMatchWidth.js'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [session, setSession] = useState(null)
   const location = useLocation()
+  const logoRef = useRef(null)
+  const taglineRef = useRef(null)
+
+  // El descriptor queda exactamente del ancho del logo (ni mayor ni menor)
+  useMatchWidth(logoRef, taglineRef)
 
   useEffect(() => {
     auth.getSession().then(({ session }) => setSession(session))
@@ -18,10 +24,12 @@ export default function Header() {
     <header className="header">
       <div className="container header-inner">
         <Link to="/" className="header-logo" onClick={() => setMenuOpen(false)}>
-          <span className="font-display" style={{ fontSize: 'clamp(15px, 3.2vw, 22px)', letterSpacing: '0.02em', lineHeight: 1 }}>
-            MIRELLABARTRA<span className="logo-com" style={{ color: '#0d9488' }}>.COM</span>
+          <span ref={logoRef} className="font-display header-logo-word">
+            MIRELLABARTRA.COM
           </span>
-          <span className="header-logo-tagline">Primer medio de prensa para terapeutas</span>
+          <span ref={taglineRef} className="header-logo-tagline">
+            Primer medio de prensa para terapeutas
+          </span>
         </Link>
 
         <button
@@ -64,7 +72,6 @@ export default function Header() {
           z-index: 100;
           background: var(--bg-base);
           border-bottom: 1px solid var(--border-color);
-          box-shadow: 0 3px 0 var(--accent-glow);
           padding: 8px 0;
         }
         .header-inner {
@@ -75,21 +82,24 @@ export default function Header() {
         .header-logo {
           text-decoration: none;
           color: var(--text-dark);
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
         }
-        .header-logo > span {
-          display: block;
-        }
-        .header-logo .logo-com {
-          display: inline;
+        .header-logo-word {
+          font-size: clamp(15px, 3.2vw, 22px);
+          letter-spacing: 0;
+          line-height: 0.95;
+          white-space: nowrap;
         }
         .header-logo-tagline {
-          display: block;
           font-family: var(--font-mono);
-          font-size: 8px;
-          letter-spacing: 0.08em;
+          font-size: clamp(5.4px, 1.15vw, 7.9px);
+          letter-spacing: 0; /* lo ajusta useMatchWidth al ancho exacto del logo */
           text-transform: uppercase;
           color: var(--text-muted);
-          margin-top: 2px;
+          margin-top: 1px;
+          white-space: nowrap;
         }
         .header-nav {
           display: flex;

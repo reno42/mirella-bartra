@@ -70,11 +70,11 @@ export default function Cursos() {
                         📅 Inicia: {formatDate(course.start_date)}
                       </div>
                       {course.price > 0 ? (
-                        <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px' }}>
+                        <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: '#0000EE' }}>
                           S/ {course.price.toFixed(2)}
                         </div>
                       ) : (
-                        <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: 'var(--accent-glow)' }}>
+                        <div style={{ fontSize: '14px', fontWeight: 700, marginTop: '8px', color: '#0000EE' }}>
                           Gratuito
                         </div>
                       )}

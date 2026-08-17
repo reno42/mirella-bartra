@@ -60,18 +60,16 @@ export default function Directorio() {
           {specialties.length > 0 && (
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
               <button
-                className={`tag ${!selectedSpecialty ? '' : 'tag-outline'}`}
+                className={`tag-filter ${!selectedSpecialty ? 'active' : ''}`}
                 onClick={() => setSelectedSpecialty('')}
-                style={{ cursor: 'pointer' }}
               >
                 Todas
               </button>
               {specialties.map(s => (
                 <button
                   key={s.id || s.name}
-                  className={`tag ${selectedSpecialty === s.name ? '' : 'tag-outline'}`}
+                  className={`tag-filter ${selectedSpecialty === s.name ? 'active' : ''}`}
                   onClick={() => setSelectedSpecialty(s.name)}
-                  style={{ cursor: 'pointer' }}
                 >
                   {s.name}
                 </button>
@@ -96,27 +94,33 @@ export default function Directorio() {
                         onClick={() => setSelectedTherapist(entry)}
                         style={{ cursor: 'pointer' }}
                       >
-                        <div className="card-brutalist" style={{ height: '100%', borderColor: 'var(--text-dark)', borderWidth: '2px', background: 'var(--accent-glow)' }}>
+                        <div className="card-brutalist top-therapist-card" style={{ height: '100%' }}>
                           <div style={{ padding: '16px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                              <div style={{
-                                width: '48px', height: '48px', borderRadius: '50%', background: 'var(--text-dark)',
-                                color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                fontWeight: 700, fontSize: '18px', fontFamily: 'var(--font-display)', flexShrink: 0,
-                                border: '2px solid var(--text-dark)',
-                              }}>
-                                {entry.full_name?.charAt(0) || '?'}
-                              </div>
+                              {entry.photo_url ? (
+                                <img src={entry.photo_url} alt={entry.full_name} loading="lazy" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, border: '2px solid var(--text-dark)' }} />
+                              ) : (
+                                <div style={{
+                                  width: '48px', height: '48px', borderRadius: '50%', background: 'var(--text-dark)',
+                                  color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  fontWeight: 700, fontSize: '18px', fontFamily: 'var(--font-display)', flexShrink: 0,
+                                }}>
+                                  {entry.full_name?.charAt(0) || '?'}
+                                </div>
+                              )}
                               <div>
                                 <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-dark)' }}>
                                   {entry.full_name}
                                 </h3>
-                                <span className="tag" style={{ fontSize: '9px' }}>{entry.specialty || 'Fonoaudiología'}</span>
+                                <span className="tag tag-outline" style={{ fontSize: '9px' }}>{entry.specialty || 'Fonoaudiología'}</span>
                               </div>
                             </div>
-                            <div style={{ fontSize: '12px', color: 'var(--text-dark)', lineHeight: 1.5 }}>
+                            <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
                               {entry.city && <div>📍 {entry.city}</div>}
                               {entry.years_experience && <div>📋 {entry.years_experience} años de experiencia</div>}
+                            </div>
+                            <div className="font-mono" style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginTop: '10px', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+                              ★ Recomendado por MIRELLABARTRA.COM
                             </div>
                           </div>
                         </div>
@@ -143,13 +147,17 @@ export default function Directorio() {
                       <div className="card-brutalist" style={{ height: '100%' }}>
                         <div style={{ padding: '16px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                            <div style={{
-                              width: '44px', height: '44px', borderRadius: '50%', background: 'var(--text-dark)',
-                              color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              fontWeight: 700, fontSize: '16px', fontFamily: 'var(--font-display)', flexShrink: 0,
-                            }}>
-                              {entry.full_name?.charAt(0) || '?'}
-                            </div>
+                            {entry.photo_url ? (
+                              <img src={entry.photo_url} alt={entry.full_name} loading="lazy" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, border: '1px solid var(--text-dark)' }} />
+                            ) : (
+                              <div style={{
+                                width: '44px', height: '44px', borderRadius: '50%', background: 'var(--text-dark)',
+                                color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                fontWeight: 700, fontSize: '16px', fontFamily: 'var(--font-display)', flexShrink: 0,
+                              }}>
+                                {entry.full_name?.charAt(0) || '?'}
+                              </div>
+                            )}
                             <div>
                               <h3 className="font-sans" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-dark)' }}>
                                 {entry.full_name}
@@ -202,19 +210,22 @@ function TherapistModal({ therapist, onClose }) {
         <div className="modal-body">
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-            <div style={{
-              width: '72px', height: '72px', borderRadius: '50%', background: 'var(--text-dark)',
-              color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 700, fontSize: '24px', fontFamily: 'var(--font-display)', flexShrink: 0,
-              border: '2px solid var(--text-dark)',
-            }}>
-              {therapist.full_name?.charAt(0) || '?'}
-            </div>
+            {therapist.photo_url ? (
+              <img src={therapist.photo_url} alt={therapist.full_name} style={{ width: '72px', height: '72px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, border: '2px solid var(--text-dark)' }} />
+            ) : (
+              <div style={{
+                width: '72px', height: '72px', borderRadius: '50%', background: 'var(--text-dark)',
+                color: 'var(--text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontWeight: 700, fontSize: '24px', fontFamily: 'var(--font-display)', flexShrink: 0,
+              }}>
+                {therapist.full_name?.charAt(0) || '?'}
+              </div>
+            )}
             <div>
               <h2 className="font-display" style={{ fontSize: '22px', lineHeight: 1.2, marginBottom: '6px' }}>
                 {therapist.full_name}
               </h2>
-              <span className="tag">{therapist.specialty || 'Fonoaudiología'}</span>
+              <span className="tag tag-outline">{therapist.specialty || 'Fonoaudiología'}</span>
             </div>
           </div>
 
