@@ -36,6 +36,7 @@ import Buscar from '@/pages/public/Buscar.jsx'
 import CapacitacionesB2B from '@/pages/public/CapacitacionesB2B.jsx'
 import Descargables from '@/pages/public/Descargables.jsx'
 import Depositar from '@/pages/public/Depositar.jsx'
+import ConectarIAs from '@/pages/public/ConectarIAs.jsx'
 
 // Admin Pages
 import AdminDashboard from '@/pages/admin/Dashboard.jsx'
@@ -61,6 +62,7 @@ import AdminB2B from '@/pages/admin/B2B.jsx'
 import AdminCRM from '@/pages/admin/CRM.jsx'
 import AdminCertificados from '@/pages/admin/Certificados.jsx'
 import AdminTicker from '@/pages/admin/Ticker.jsx'
+import AdminMcp from '@/pages/admin/Mcp.jsx'
 
 // Init loading interceptor
 import '@/lib/loadingInterceptor.js'
@@ -109,6 +111,7 @@ export default function App() {
               <Route path="/capacitaciones-b2b" element={<CapacitacionesB2B />} />
               <Route path="/descargables" element={<Descargables />} />
               <Route path="/depositar" element={<Depositar />} />
+              <Route path="/conectar-ias" element={<ConectarIAs />} />
               <Route path="/login" element={<Login />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/buscar" element={<Buscar />} />
@@ -151,6 +154,7 @@ export default function App() {
               <Route path="crm" element={<AdminCRM />} />
               <Route path="certificados" element={<AdminCertificados />} />
               <Route path="ticker" element={<AdminTicker />} />
+              <Route path="mcp" element={<AdminMcp />} />
             </Route>
           </Routes>
         </BrowserRouter>

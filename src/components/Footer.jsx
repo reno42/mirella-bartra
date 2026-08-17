@@ -18,6 +18,7 @@ const NAV_SECTIONS = [
       { label: 'Nosotros', to: '/nosotros' },
       { label: 'Capacitaciones B2B', to: '/capacitaciones-b2b' },
       { label: 'Trabaja con Nosotros', to: '/trabaja-con-nosotros' },
+      { label: 'Conectar tus IAs (MCP)', to: '/conectar-ias' },
     ],
   },
   {

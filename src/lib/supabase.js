@@ -302,6 +302,27 @@ export const db = {
     return { error }
   },
 
+  // ── Tokens MCP (para que las IAs se conecten) ──
+  createMcpToken: async ({ token, name, scope, profile_id }) => {
+    const { data, error } = await supabase.from('mcp_tokens').insert({ token, name, scope, profile_id }).select().single()
+    return { data, error }
+  },
+
+  listMyMcpTokens: async () => {
+    const { data, error } = await supabase.from('mcp_tokens').select('*').order('created_at', { ascending: false })
+    return { data, error }
+  },
+
+  revokeMcpToken: async (id) => {
+    const { error } = await supabase.from('mcp_tokens').update({ is_active: false }).eq('id', id)
+    return { error }
+  },
+
+  deleteMcpToken: async (id) => {
+    const { error } = await supabase.from('mcp_tokens').delete().eq('id', id)
+    return { error }
+  },
+
   // ── Complaints ──
   createComplaint: async (complaint) => {
     const { data, error } = await supabase.from('complaints_book').insert(complaint).select().single()

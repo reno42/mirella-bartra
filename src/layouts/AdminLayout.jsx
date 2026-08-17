@@ -26,6 +26,7 @@ const SIDEBAR_ITEMS = [
 const ADMIN_ONLY_ITEMS = [
   { to: '/admin/certificados', label: 'Certificados', icon: '🏅' },
   { to: '/admin/ticker', label: 'Ticker', icon: '📢' },
+  { to: '/admin/mcp', label: 'MCP · IAs', icon: '🤖' },
 ]
 
 export default function AdminLayout() {
