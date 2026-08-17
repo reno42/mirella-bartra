@@ -225,7 +225,7 @@ export default function McpAdmin() {
 
       <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '20px', maxWidth: '640px', lineHeight: 1.7 }}>
         Los tokens se validan contra la tabla <code>mcp_tokens</code> en cada llamada; eliminar uno aqui lo revoca
-        inmediatamente. Las operaciones de escritura usan el service role desde la edge function (nunca expones claves
+        inmediatamente. Las operaciones de escritura usan la secret key (sb_secret_…) desde la edge function (nunca expones claves
         a la IA). Los scopes usuario y público no pueden alcanzar ninguna herramienta admin: el servidor las filtra
         por scope antes de ejecutar.
       </p>

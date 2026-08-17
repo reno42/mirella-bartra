@@ -18,8 +18,9 @@ interface AuditEntry {
 }
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || ''
-const SUPABASE_KEY = Deno.env.get('SUPABASE_ANON_KEY') || ''
-const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+const SUPABASE_KEY = Deno.env.get('SUPABASE_PUBLISHABLE_KEY') || Deno.env.get('SUPABASE_ANON_KEY') || ''
+// Secret key (sb_secret_…) — sucede al legacy service_role
+const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SECRET_KEY') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
 
 function supabaseHeaders(useServiceRole = false) {
   return {

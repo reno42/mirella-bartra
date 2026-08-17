@@ -36,17 +36,19 @@ function env(name: string): string | undefined {
   return Deno.env.get(name)
 }
 
-function serviceKey(): string | undefined {
-  return env('SUPABASE_SERVICE_ROLE_KEY')
+/** Secret key (sb_secret_…): sucede al legacy service_role. Bypass RLS, solo server-side. */
+function secretKey(): string | undefined {
+  return env('SUPABASE_SECRET_KEY') || env('SUPABASE_SERVICE_ROLE_KEY')
 }
 
-function anonKey(): string {
-  return env('SUPABASE_ANON_KEY') || env('VITE_SUPABASE_ANON_KEY') || ''
+/** Publishable key (sb_publishable_…): sucede al legacy anon key. */
+function publishableKey(): string {
+  return env('SUPABASE_PUBLISHABLE_KEY') || env('SUPABASE_ANON_KEY') || env('VITE_SUPABASE_ANON_KEY') || ''
 }
 
-/** Data ops: service role (bypass RLS, el scope se valida en este código). */
+/** Data ops: secret key (bypass RLS, el scope se valida en este código). */
 function sb(endpoint: string, opts: { method?: string; body?: unknown } = {}) {
-  const key = serviceKey() || anonKey()
+  const key = secretKey() || publishableKey()
   const headers: Record<string, string> = {
     apikey: key,
     Authorization: `Bearer ${key}`,
@@ -74,7 +76,7 @@ async function sbJson(endpoint: string, opts?: { method?: string; body?: unknown
 async function getUserFromJwt(jwt: string) {
   try {
     const resp = await fetch(`${env('SUPABASE_URL')}/auth/v1/user`, {
-      headers: { apikey: anonKey(), Authorization: `Bearer ${jwt}` },
+      headers: { apikey: publishableKey(), Authorization: `Bearer ${jwt}` },
     })
     if (!resp.ok) return null
     return await resp.json()
@@ -160,8 +162,8 @@ interface ToolDef {
 }
 
 function requireWriteBackend() {
-  if (!serviceKey()) {
-    throw { code: -32003, message: 'El servidor no tiene SUPABASE_SERVICE_ROLE_KEY configurada (variable de entorno de Netlify). Las escrituras están deshabilitadas hasta configurarla.' }
+  if (!secretKey()) {
+    throw { code: -32003, message: 'El servidor no tiene SUPABASE_SECRET_KEY configurada (variable de entorno de Netlify, valor sb_secret_…). Las escrituras están deshabilitadas hasta configurarla.' }
   }
 }
 

@@ -58,7 +58,8 @@ export default async function handler(req: Request) {
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    // Secret key (sb_secret_…) — sucede al legacy service_role
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SECRET_KEY') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 
     // Check for existing subscriber
     const checkResp = await fetch(
